@@ -1,0 +1,20 @@
+front:
+  image: sondha-dev
+  ports:
+    - "8080:80"
+  environment:
+      XDEBUG_CONFIG: remote_host=192.168.1.124
+      PHP_IDE_CONFIG: "serverName=novo-sondha"
+  volumes:
+    - ./:/var/www
+    - ./sites:/etc/nginx/sites-enabled
+postgres:
+  image: postgres:9.4.4
+  ports:
+    - "5432:5432" # Bind host port 5432 to PostgreSQL port 5432
+  volumes:
+    - ./banco:/app-db-dumps # We're mounting this folder so we can backup/restore database dumps from our app folder.
+    #- ./db/postgres-setup.sql/docker-entrypoint-initdb.d/setup.sql
+  environment:
+    LC_ALL: C.UTF-8
+    POSTGRES_PASSWORD: 123456
